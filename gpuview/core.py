@@ -8,6 +8,7 @@ Core functions of gpuview.
 import os
 import json
 import subprocess
+import sys
 try:
     from urllib.request import urlopen
 except ImportError:
@@ -88,7 +89,10 @@ def all_gpustats():
     for url in hosts:
         try:
             raw_resp = urlopen(url + '/gpustat')
-            gpustat = json.loads(raw_resp.read())
+            if sys.version_info[0] < 3:
+                gpustat = json.loads(raw_resp.read())
+            else:
+                gpustat = json.loads(raw_resp.read().decode('utf-8'))
             raw_resp.close()
             if not gpustat or 'gpus' not in gpustat:
                 continue
