@@ -61,11 +61,11 @@ def my_gpustat():
                 gpu.pop("query_time", None)
 
             gpu['flag'] = 'bg-primary'
-            if gpu['temperature.gpu'] > 75:
+            if gpu['memory'] > 75:
                 gpu['flag'] = 'bg-danger'
-            elif gpu['temperature.gpu'] > 50:
+            elif gpu['memory'] > 50:
                 gpu['flag'] = 'bg-warning'
-            elif gpu['temperature.gpu'] > 25:
+            elif gpu['memory'] > 25:
                 gpu['flag'] = 'bg-success'
         return stat
     except Exception as e:
