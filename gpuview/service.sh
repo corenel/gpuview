@@ -41,9 +41,9 @@ path=$(which gpuview)
 
 echo ''
 echo 'Installing supervisor...'
-if [ "$OS" == "Ubuntu" ]; then
+if [ "$OS" = "Ubuntu" ]; then
   sudo apt install -y supervisor
-elif [ "$OS" == "CentOS Linux" ]; then
+elif [ "$OS" = "CentOS Linux" ]; then
   sudo yum install -y epel-release
   sudo yum install -y supervisor
 else
@@ -56,9 +56,9 @@ echo 'Deploying service...'
 LOG_PATH=$HOME/.gpuview
 mkdir -p ${LOG_PATH}
 
-if [ "$OS" == "Ubuntu" ]; then
+if [ "$OS" = "Ubuntu" ]; then
   CONF_PATH=/etc/supervisor/conf.d/gpuview.conf
-elif [ "$OS" == "CentOS Linux" ]; then
+elif [ "$OS" = "CentOS Linux" ]; then
   CONF_PATH=/etc/supervisord.d/gpuview.ini
 else
   echo "Unsupported OS"
@@ -75,17 +75,17 @@ stderr_logfile = ${LOG_PATH}/stderr.log
 stdout_logfile = ${LOG_PATH}/stdout.log" \
 | sudo tee "${CONF_PATH}" > /dev/null
 
-if [ "$OS" == "CentOS Linux" ]; then
+if [ "$OS" = "CentOS Linux" ]; then
   sudo touch /var/run/supervisor.sock
   sudo chmod 777 /var/run/supervisor.sock
 fi
 
 sudo supervisorctl reread
-if [ "$OS" == "Ubuntu" ]; then
+if [ "$OS" = "Ubuntu" ]; then
   sudo systemctl enable supervisor
   sudo systemctl restart supervisor
   sudo systemctl status supervisor
-elif [ "$OS" == "CentOS Linux" ]; then
+elif [ "$OS" = "CentOS Linux" ]; then
   sudo systemctl enable supervisord
   sudo systemctl restart supervisord
   sudo systemctl status supervisord
