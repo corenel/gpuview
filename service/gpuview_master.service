@@ -1,0 +1,15 @@
+[Unit]
+Description=GPUView Daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=CURR_EXEC_PATH run --host 0.0.0.0 --port 9988 --exclude-self
+Restart=always
+RestartSec=20s
+User=CURR_USER
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
